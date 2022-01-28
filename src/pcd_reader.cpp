@@ -1,9 +1,10 @@
 #include <iostream>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
- 
-int
-main (int argc, char** argv)
+
+// 介绍了两种读取和保存到pcd格式点云的方法
+
+int main (int argc, char** argv)
 {
   pcl::PointCloud<pcl::PointXYZ>::Ptr cloud (new pcl::PointCloud<pcl::PointXYZ>);
  
@@ -23,3 +24,19 @@ main (int argc, char** argv)
  
   return (0);
 }
+
+
+// 1、使用reader
+
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);	// Generate pointcloud data，新建指针cloud存放点云
+	pcl::PCDReader reader;
+	reader.read<pcl::PointXYZ>("jiange0.05liqun_100inliers4.pcd", *cloud);//读取pcd文件，用指针传递给cloud。
+	
+// 2、使用loadPCDFile
+
+	pcl::PointCloud<pcl::PointXYZ>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZ>);	// Generate pointcloud data，新建指针cloud存放点云
+	if (pcl::io::loadPCDFile<pcl::PointXYZ>("resultjiange0.05liqun.pcd", *cloud) == -1)//*打开点云文件。
+	{                                                                           
+		PCL_ERROR("Couldn't read that pcd file\n");                         
+		return(-1);//如果没找到该文件，返回-1，跳出整个main函数
+	}

@@ -1,6 +1,8 @@
 #include <iostream>
 #include <pcl/io/pcd_io.h>
 #include <pcl/point_types.h>
+
+// 介绍了读取根目录下与指定目录下的方法
  
 int main (int argc, char** argv)
 {
@@ -27,3 +29,12 @@ int main (int argc, char** argv)
  
   return (0);
 }
+
+// 写入磁盘
+// 写入方法一：
+pcl::PCDWriter writer;
+writer.write<pcl::PointXYZ>("name_cluster.pcd", *INcloud, false);//将点云保存到PCD文件中
+	 
+//写入方法二：
+pcl::io::savePCDFileASCII("name_cluster.pcd", *INcloud); //将点云保存到PCD文件中
+	 		————————————————
